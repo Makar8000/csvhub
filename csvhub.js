@@ -1,65 +1,57 @@
 // find all files in the page
-files = $("div#files.diff-view .file");
-for (var f = 0; f < files.length; f++) {
+const files = $("div#files.diff-view .file");
+
+for (let f = 0; f < files.length; f++) {
 
   // check if this is a CSV file
-  filename = files[f].querySelector("div[data-path]").getAttribute('data-path');
+  const filename = files[f].querySelector("div[data-path]").getAttribute('data-path');
   if (filename.match(".*\.csv")) {
 
-
     // Get all diff lines
-    lines = files[f].querySelectorAll(".blob-code-inner");
+    const lines = files[f].querySelectorAll(".blob-code-inner.blob-code-marker");
 
     // Get data
-    var old_data = []
-    var new_data = []
+    const old_data = []
+    const new_data = []
 
-    for (var l = 0; l < lines.length; l++) {
+    for (let l = 0; l < lines.length; l++) {
 
       // Parse data from line
-      line = lines[l].textContent;
-      data = $.csv.toArray(line.substr(1).trim());
+      const line = lines[l].textContent;
+      const data = $.csv.toArray(line.trim());
+      const changeType = lines[l].getAttribute("data-code-marker");
 
       // Line has been added
-      if (line.indexOf("+") == 0) {
+      if (changeType !== "-") 
         new_data.push(data);
-      }
 
       // Line has been removed
-      if (line.indexOf("-") == 0) {
+      if (changeType !== "+") 
         old_data.push(data);
-      }
-
-      // Line has not changed
-      if (line.indexOf(" ") == 0) {
-        new_data.push(data);
-        old_data.push(data);
-      }
 
     }
 
     // Parse CSV
-    var old_table = new daff.TableView(old_data);
-    var new_table = new daff.TableView(new_data);
+    const old_table = new daff.TableView(old_data);
+    const new_table = new daff.TableView(new_data);
 
-    var alignment = daff.compareTables(old_table,new_table).align();
+    const alignment = daff.compareTables(old_table,new_table).align();
 
-    var data_diff = [];
-    var table_diff = new daff.TableView(data_diff);
+    const data_diff = [];
+    const table_diff = new daff.TableView(data_diff);
 
-    var flags = new daff.CompareFlags();
+    const flags = new daff.CompareFlags();
     flags.show_unchanged = true;
     flags.show_unchanged_columns = true;
     flags.always_show_header = false;
-    var highlighter = new daff.TableDiff(alignment,flags);
+    const highlighter = new daff.TableDiff(alignment,flags);
     highlighter.hilite(table_diff);
 
-    var diff2html = new daff.DiffRender();
+    const diff2html = new daff.DiffRender();
     diff2html.render(table_diff);
     diff_html = diff2html.html()
 
     files[f].querySelector("div.data").innerHTML = "<div class='csvhub-diff'>"+diff_html+"</div>";
-
   }
 
 }
