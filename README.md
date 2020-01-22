@@ -4,7 +4,7 @@ A Chrome extension that shows CSV file diffs nicely on GitHub.
 
 ## Installation
 
-Install the extension from the [Chrome Web Store](https://chrome.google.com/webstore/detail/csvhub/opaiipnpdfgdboahhpdgclicapjoeina).
+Install the extension from the [Chrome Web Store](https://chrome.google.com/webstore/detail/csvhub%20%20/opaiipnpdfgdboahhpdgclicapjoeina).
 
 ## Usage
 
