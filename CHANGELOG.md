@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+Updated daff library. Better error handling. 
+
 ## 1.0.4
 
 Update libraries. Updated changes to github diff CSS selectors (again).
